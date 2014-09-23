@@ -1,0 +1,48 @@
+/* Styles go here */
+
+
+#grid table {
+  border-collapse: collapse;
+	border-spacing: 0;
+}
+
+#grid tr{
+  min-height: 10px;
+}
+#grid td{
+  min-width: 45px;
+  padding: 0px;
+}
+
+#grid td > div {
+height: 110px;
+width: 100%;
+border-radius: 5px;
+text-align: center;
+background-color: #9AE;
+}
+
+td.bb{
+  border-bottom: 2px solid black;
+  width: 10px;
+}
+td.br{
+  border-right: 2px solid black;
+  height: 10px;
+}
+td.bl{
+  border-left: 2px solid black;
+  height: 10px;
+}
+td.bt{
+  border-top: 2px solid black;
+  height: 10px;
+}
+
+#grid img{
+  height: 80px;
+  margin-top: 5px;
+}
+#grid div.txt{
+  font-size: 12px;
+}
