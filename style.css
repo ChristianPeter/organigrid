@@ -1,20 +1,19 @@
 /* Styles go here */
 
-#grid table {
+table.grid-table {
   border-collapse: collapse;
-	border-spacing: 0;
+  border-spacing: 0;
 }
 
-#grid tr{
+table.grid-table tr{
   min-height: 10px;
 }
-#grid td{
-  min-width: 45px;
+table.grid-table td{
+  min-width: 40px;
   padding: 0px;
-
 }
 
-#grid td > div {
+table.grid-table td > div {
 min-height: 110px;
 width: 100%;
 border-radius: 5px;
@@ -26,28 +25,28 @@ display: inline-block;
 box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75);
 }
 
-td.bb{
+table.grid-table .bb{
   border-bottom: 2px solid black;
   width: 10px;
 }
-td.br{
+table.grid-table .br{
   border-right: 2px solid black;
   height: 10px;
 }
-td.bl{
+table.grid-table .bl{
   border-left: 2px solid black;
   height: 10px;
 }
-td.bt{
+table.grid-table .bt{
   border-top: 2px solid black;
   height: 10px;
 }
 
-#grid img{
+table.grid-table img{
   height: 80px;
   margin-top: 5px;
 }
-#grid div.txt{
+table.grid-table .txt{
   font-size: 12px;
 }
 
@@ -103,6 +102,19 @@ td.bt{
   color: red;
   right: 15px;
   position: absolute;
+  width: 16px;
+  background-color: #eee;
+  text-align: center;
+  cursor: pointer;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.lightbox-header .lightbox-control:hover{
+	background-color: #ccc;
+	-webkit-box-shadow: 0px 0px 18px 5px rgba(50, 50, 50, 0.63);
+	-moz-box-shadow:    0px 0px 18px 5px rgba(50, 50, 50, 0.63);
+	box-shadow:         0px 0px 18px 5px rgba(50, 50, 50, 0.63);
 }
 
 .lightbox-content{

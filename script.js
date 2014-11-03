@@ -20,7 +20,7 @@
       
       var $overlay = $("<div class='lightbox-overlay'></div>");
       var $container = $("<div class='lightbox-container'></div>");
-      var $header = $("<div class='lightbox-header'><span class='lightbox-header-text'>" + options.header + "</span><button type='button' class='lightbox-control'>X</button></div>");
+      var $header = $("<div class='lightbox-header'><span class='lightbox-header-text'>" + options.header + "</span><span class='lightbox-control'>X</span></div>");
       var $content = $("<div class='lightbox-content'>" + content + "</div>");
       
       if (options.target){
@@ -38,7 +38,7 @@
       $container.append($content);
       
       // close listener
-      $header.find('button').on('click', function(){
+      $header.find('span.lightbox-control').on('click', function(){
         $('body').find('div.lightbox-overlay').remove();
         $('body').find('div.lightbox-container').remove();
       });
@@ -56,12 +56,111 @@
 })(jQuery, window, document);
 
 
+// organigrid plugin
+(function($, window, document) {
+	var defaults = {nodeClick: function(node){}};
+   	var $grid;
+   	var model;
+	$.fn.organigrid = function(options){
+		options = $.extend({}, defaults, options);
+		
+		$grid = $(this);
+		model = options.model || {};
+		initGrid();
+		
+		initElements(model.elements || []);
+		initLines(model.lines || []);
+		initLegend(model.legend || []);
+		
+		// node click listener
+		$(this).on('click', 'td.node', function(){			
+			options.nodeClick($(this));
+		});
+		
+	};
+	
+	
+	function initGrid(){
+		var table = "<table class='grid-table'>";  		
+		for (var y = 0; y < 24; y++){
+		    table += "<tr data-row='"+ y + "'>";
+		    for (var x = 0; x < 24; x++){
+		      table += "<td data-col='" + x + "' data-row='"+ y + "'>";
+		      table += "&nbsp;";
+		      table += "</td>";
+		    }
+		    table += "</tr>";
+		    
+		}
+		  
+		table += "</table>";
+		  
+  		$grid.html(table);		
+	}
+	
+	function initElements(elts){
+		 // add elts
+		  $.each(elts, function(){
+		    //alert(this.x);
+		    var $cell = $grid.find("tr[data-row="+this.y+"] > td[data-col="+this.x+"]");
+		    $cell.html(this.data);
+		    $cell.attr('colspan',this.w).attr('rowspan',this.h);
+		    $cell.addClass('node');
+		    
+		    // add detail data:
+		    $cell.data('detail', this.detail);
+		    $cell.data('detailHeader', this.detailHeader);
+		    // find neighbours and kill em
+		    $cell.next().remove();
+		    var neigh = $cell.parent().next().find("td[data-col="+this.x+"]"); //;.remove().next().remove();
+		    var nn = neigh.next();//neigh.remove();
+		    neigh.remove();
+		    nn.remove();
+		    
+		  });
+	}
+	
+	function initLines(lines){
+	  // add lines
+	  $.each(lines, function(){
+	    var $cell = $grid.find("tr[data-row="+this.y+"] > td[data-col="+this.x+"]");
+	    $cell.addClass(this.borders);
+	  });
+	}
+	
+	function initLegend(legend){
+		// add legend
+	  $.each(legend, function(index){
+	    //this.x = 24; // col for legend
+	    var $cell = $grid.find("tr[data-row="+this.trow+"] > td:last");
+	    $cell.html(this.data);
+	    $cell = $grid.find("tr[data-row="+this.y +"] > td:last");
+	    var $row = $cell.parent();
+	  
+	    
+	    var count = this.h;
+	    while (--count > 0){
+	      if (index % 2 === 0) {
+	        //$row.css('background-color', this.color);
+	        $row.addClass('row-even');
+	      }
+	      else {
+	        $row.addClass('row-odd');
+	      }
+	      $row = $row.next();
+	    }
+	    
+	  });
+	}
+		 
+})(jQuery, window, document);
 
 
 
+/*
 $(document).ready(function(){
-  
-  
+	
+  var gridModel = {};
   var elts = [];
   // gf und verwaltung
   elts.push({
@@ -188,11 +287,16 @@ $(document).ready(function(){
   legend.push({y:21, h:4, trow: 22, color: '#dca', data: "Lehrlinge"});
   
   
+  gridModel.elements = elts;
+  gridModel.lines = lines;
+  gridModel.legend = legend;
+  
+  
   var $grid = $('#grid');
   
   // prepare grid
   
-  var table = "<table id='grid-table'>";
+  var table = "<table class='grid-table'>";
   
   for (var y = 0; y < 24; y++){
     table += "<tr data-row='"+ y + "'>";
@@ -263,11 +367,11 @@ $(document).ready(function(){
   
   //console.log($grid.html());
   // add spacer row for header and footer
-  /*
-  var $tableRows = $grid.find('tr');
-  $tableRows.first().before("<tr><td class='row-odd'>&nbsp;</td></tr>");
-  $tableRows.last().after("<tr><td class='row-odd'>&nbsp;</td></tr>");
-  */
+  
+  //var $tableRows = $grid.find('tr');
+  //$tableRows.first().before("<tr><td class='row-odd'>&nbsp;</td></tr>");
+  //$tableRows.last().after("<tr><td class='row-odd'>&nbsp;</td></tr>");
+  
   // add click listener for element cells:
   
   $('#grid td.node').on('click', function(){
@@ -276,3 +380,4 @@ $(document).ready(function(){
   });
   
 });
+*/
