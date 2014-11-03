@@ -1,5 +1,64 @@
 // Code goes here
 
+(function($, window, document) {
+  
+  
+  $.fn.lightbox = function(options){
+    
+    function showDialog(){
+      
+      var defaults = {header: ''};
+      options = $.extend({}, defaults, options);
+      
+      var content = '';
+      if (options.content){
+        if(typeof (options.content) ==='function'){
+          content = options.content();
+        }
+        else content = options.content;
+      }
+      
+      var $overlay = $("<div class='lightbox-overlay'></div>");
+      var $container = $("<div class='lightbox-container'></div>");
+      var $header = $("<div class='lightbox-header'><span class='lightbox-header-text'>" + options.header + "</span><button type='button' class='lightbox-control'>X</button></div>");
+      var $content = $("<div class='lightbox-content'>" + content + "</div>");
+      
+      if (options.target){
+        $content.append(options.target.children().clone());
+      }
+      
+      if (options.targetId){
+        $content.append($(options.targetId).children().clone());
+      }
+      
+      $('body').append($overlay);
+      $('body').append($container);
+      
+      $container.append($header);
+      $container.append($content);
+      
+      // close listener
+      $header.find('button').on('click', function(){
+        $('body').find('div.lightbox-overlay').remove();
+        $('body').find('div.lightbox-container').remove();
+      });
+    }
+    
+    /*$(this).on('click', function(){
+      showDialog();
+    });
+    */
+    showDialog();
+    
+    
+  };
+
+})(jQuery, window, document);
+
+
+
+
+
 $(document).ready(function(){
   
   
@@ -7,8 +66,9 @@ $(document).ready(function(){
   // gf und verwaltung
   elts.push({
     x:8, y:0, w:2, h:2, 
-    data: "<div><img src='http://us.cdn001.fansshare.com/photos/veronicamars/veronica-mars-hbic-characters-583939517.jpg'/><div class='txt'>Veronica Mars</div></div>",
-    detail : "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo"
+    data: "<div><img src='http://www.diehl-elektrik.de/images/mitarbeiter_neu.jpg'/><div class='txt'>Max Mustermann</div></div>",
+    detail : "#detail-kd",
+    detailHeader : "Mehr über KD"
   });
   elts.push({x:6, y:4, w:2, h:2, data: "<div>hello</div>"});
   elts.push({x:10, y:6, w:2, h:2, data: "<div>hello</div>"});
@@ -120,21 +180,25 @@ $(document).ready(function(){
   
   // legend
   var legend = [];
-  legend.push({y:0, h:4, trow: 0, color: '#aaa', data: "Inhaber"});
-  legend.push({y:3, h:7, trow: 4, color: '#bbb', data: "Büro"});
-  legend.push({y:9, h:9, trow: 10, color: '#aaa', data: "Meister"});
-  legend.push({y:17, h:5, trow: 18, color: '#bbb', data: "XYZ"});
-  legend.push({y:21, h:4, trow: 22, color: '#aaa', data: "Lehrlinge"});
+  legend.push({y:0, h:4, trow: 0, color: '#8aa', data: "Inhaber"});
+  legend.push({y:3, h:7, trow: 4, color: '#a8a', data: "Büro"});
+  legend.push({y:9, h:6, trow: 10, color: '#aa8', data: "Meister"});
+  legend.push({y:13, h:5, trow: 14, color: '#bd4', data: "Abt. A"});
+  legend.push({y:17, h:5, trow: 18, color: '#bcd', data: "Abt. B"});
+  legend.push({y:21, h:4, trow: 22, color: '#dca', data: "Lehrlinge"});
+  
+  
   var $grid = $('#grid');
   
   // prepare grid
   
   var table = "<table id='grid-table'>";
   
-  for (var y = 0; y < 25; y++){
+  for (var y = 0; y < 24; y++){
     table += "<tr data-row='"+ y + "'>";
     for (var x = 0; x < 24; x++){
       table += "<td data-col='" + x + "' data-row='"+ y + "'>";
+      table += "&nbsp;";
       table += "</td>";
     }
     table += "</tr>";
@@ -155,6 +219,7 @@ $(document).ready(function(){
     
     // add detail data:
     $cell.data('detail', this.detail);
+    $cell.data('detailHeader', this.detailHeader);
     // find neighbours and kill em
     $cell.next().remove();
     var neigh = $cell.parent().next().find("td[data-col="+this.x+"]"); //;.remove().next().remove();
@@ -173,7 +238,7 @@ $(document).ready(function(){
   
   
   // add legend
-  $.each(legend, function(){
+  $.each(legend, function(index){
     //this.x = 24; // col for legend
     var $cell = $grid.find("tr[data-row="+this.trow+"] > td:last");
     $cell.html(this.data);
@@ -183,18 +248,31 @@ $(document).ready(function(){
     
     var count = this.h;
     while (--count > 0){
-      $row.css('background-color', this.color);
+      if (index % 2 === 0) {
+        //$row.css('background-color', this.color);
+        $row.addClass('row-even');
+      }
+      else {
+        $row.addClass('row-odd');
+      }
       $row = $row.next();
     }
     
   });
   
+  
+  //console.log($grid.html());
+  // add spacer row for header and footer
+  /*
+  var $tableRows = $grid.find('tr');
+  $tableRows.first().before("<tr><td class='row-odd'>&nbsp;</td></tr>");
+  $tableRows.last().after("<tr><td class='row-odd'>&nbsp;</td></tr>");
+  */
   // add click listener for element cells:
   
   $('#grid td.node').on('click', function(){
-    //alert('click');
     var detail = $(this).data('detail');
-    alert(detail);
+    $(this).lightbox({targetId : detail, header: $(this).data('detailHeader')});
   });
   
 });
