@@ -1,5 +1,8 @@
 /* Styles go here */
 
+.highlight{
+	background-color: #48c;
+}
 table.grid-table {
   border-collapse: collapse;
   border-spacing: 0;

@@ -11,7 +11,6 @@
     <h1>Yello Yello</h1>
     <div id="grid"></div>
     
-    <div id="grid2"></div>
     
     <div class="lightbox-template" id="detail-kd">
        <div class="lightbox-template-content">
@@ -24,7 +23,7 @@
      
      <script>
      
-    
+    	
      	
      	var gridModel = {  
    "elements":[  
@@ -559,7 +558,9 @@
  		var detail = node.data('detail');
 		node.lightbox({targetId : detail, header: node.data('detailHeader')});		
  	};
-    $('#grid2').organigrid({model: gridModel, nodeClick: nodeClick});
+    $('#grid').organigrid({model: gridModel, nodeClick: nodeClick});
+    
+
  });
      </script>
   </body>

@@ -73,7 +73,7 @@
 		initLegend(model.legend || []);
 		
 		// node click listener
-		$(this).on('click', 'td.node', function(){			
+		$grid.on('click', 'td.node', function(){			
 			options.nodeClick($(this));
 		});
 		
