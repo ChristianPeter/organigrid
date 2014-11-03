@@ -120,11 +120,11 @@ $(document).ready(function(){
   
   // legend
   var legend = [];
-  legend.push({y:0, h:4, trow: 0, color: '#8aa', data: "Inhaber"});
-  legend.push({y:3, h:7, trow: 4, color: '#a8a', data: "Büro"});
-  legend.push({y:9, h:9, trow: 10, color: '#aa8', data: "Meister"});
-  legend.push({y:17, h:5, trow: 18, color: '#bcd', data: "XYZ"});
-  legend.push({y:21, h:4, trow: 22, color: '#dca', data: "Lehrlinge"});
+  legend.push({y:0, h:4, trow: 0, color: '#aaa', data: "Inhaber"});
+  legend.push({y:3, h:7, trow: 4, color: '#bbb', data: "Büro"});
+  legend.push({y:9, h:9, trow: 10, color: '#aaa', data: "Meister"});
+  legend.push({y:17, h:5, trow: 18, color: '#bbb', data: "XYZ"});
+  legend.push({y:21, h:4, trow: 22, color: '#aaa', data: "Lehrlinge"});
   var $grid = $('#grid');
   
   // prepare grid
