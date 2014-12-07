@@ -13,8 +13,12 @@ table.grid-table tr{
 }
 table.grid-table td{
   min-width: 40px;
-  max-width: 45px;
+  max-width: 50px;
   padding: 0;
+}
+
+table.grid-table td.legend{
+	max-width: 120px;
 }
 
 table.grid-table td > div {

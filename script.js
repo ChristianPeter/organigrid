@@ -84,7 +84,7 @@
 		var table = "<table class='grid-table'>";  		
 		for (var y = 0; y < 24; y++){
 		    table += "<tr data-row='"+ y + "'>";
-		    for (var x = 0; x < 24; x++){
+		    for (var x = 0; x < 21; x++){
 		      table += "<td data-col='" + x + "' data-row='"+ y + "'>";
 		      table += "&nbsp;";
 		      table += "</td>";
@@ -134,6 +134,10 @@
 	    //this.x = 24; // col for legend
 	    var $cell = $grid.find("tr[data-row="+this.trow+"] > td[data-col=20]");
 	    $cell.html(this.data);
+	    /*$cell.attr('col-span',3);
+	    $cell.next().next().remove();
+	    $cell.next().remove();*/
+	    $cell.addClass('legend');
 	    $cell = $grid.find("tr[data-row="+this.y +"] > td[data-col=20]");
 	    var $row = $cell.parent();
 	  
