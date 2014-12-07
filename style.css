@@ -13,11 +13,12 @@ table.grid-table tr{
 }
 table.grid-table td{
   min-width: 40px;
-  padding: 0px;
+  max-width: 45px;
+  padding: 0;
 }
 
 table.grid-table td > div {
-min-height: 110px;
+min-height: 120px;
 width: 100%;
 border-radius: 5px;
 text-align: center;

@@ -132,9 +132,9 @@
 		// add legend
 	  $.each(legend, function(index){
 	    //this.x = 24; // col for legend
-	    var $cell = $grid.find("tr[data-row="+this.trow+"] > td:last");
+	    var $cell = $grid.find("tr[data-row="+this.trow+"] > td[data-col=20]");
 	    $cell.html(this.data);
-	    $cell = $grid.find("tr[data-row="+this.y +"] > td:last");
+	    $cell = $grid.find("tr[data-row="+this.y +"] > td[data-col=20]");
 	    var $row = $cell.parent();
 	  
 	    
